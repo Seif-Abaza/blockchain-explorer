@@ -1,7 +1,14 @@
+// @flow
 import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import * as ReactDOM from 'react-dom';
+import Root from './Root';
 import registerServiceWorker from './registerServiceWorker';
+import routes from './routes';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const root: ?HTMLElement = document.getElementById('root');
+
+if (root) {
+  ReactDOM.render(<Root routes={routes} />, root);
+}
+
 registerServiceWorker();
