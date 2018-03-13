@@ -2,13 +2,25 @@ import React from 'react';
 import { mount } from 'enzyme';
 import dataContainer from './dataContainer';
 
-describe('dataContainer tests', () => {
-  test('happy path', () => {
+describe('dataContainer tests', async () => {
+  test('happy path', async () => {
+    const mockData = [{ test: '1' }];
+    const promise = Promise.resolve(mockData);
+    const mockAction = jest.fn().mockReturnValue(promise);
     const TestComponent = () => <div />;
-    const mockAction = jest
-      .fn()
-      .mockReturnValue(Promise.resolve([{ test: '1' }]));
-    const WrappedTestComponent = dataContainer(mockAction)(TestComponent);
-    const wrapper = mount(<WrappedTestComponent />);
+    const DataContainerComponent = dataContainer(mockAction)(TestComponent);
+    const wrapper = mount(<DataContainerComponent />);
+    expect(wrapper.find(TestComponent).props()).toEqual({
+      data: null,
+      isLoading: true,
+      error: null,
+    });
+    await promise;
+    wrapper.update();
+    expect(wrapper.find(TestComponent).props()).toEqual({
+      data: mockData,
+      error: null,
+      isLoading: false,
+    });
   });
 });
