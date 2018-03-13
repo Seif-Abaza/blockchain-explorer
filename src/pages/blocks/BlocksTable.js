@@ -52,21 +52,26 @@ const renderBlockRow = ({
   </TableRow>
 );
 
-const BlocksTable = ({ classes, data }: Props) => (
-  <Paper className={classes.root}>
-    <Table className={classes.table}>
-      <TableHead>
-        <TableRow>
-          <TableCell>Block</TableCell>
-          <TableCell>Transactions</TableCell>
-          <TableCell>Size</TableCell>
-          <TableCell>TimeStamp</TableCell>
-        </TableRow>
-      </TableHead>
-      <TableBody>{data.map(renderBlockRow)}</TableBody>
-    </Table>
-  </Paper>
-);
+const BlocksTable = ({ classes, data }: Props) =>
+  data && (
+    <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+            <TableCell>Block</TableCell>
+            <TableCell>Transactions</TableCell>
+            <TableCell>Size</TableCell>
+            <TableCell>TimeStamp</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>{data.map(renderBlockRow)}</TableBody>
+      </Table>
+    </Paper>
+  );
+
+BlocksTable.defaultProps = {
+  data: [],
+};
 
 const enhancer = compose(
   DataContainer(() => getLatestBlocks(20)),

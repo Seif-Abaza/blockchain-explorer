@@ -10,7 +10,7 @@ type State = {
   error: Error,
 };
 
-type Props = {};
+type Props = any;
 
 export const getDisplayName = (WrappedComponent: ComponentType<any>): string =>
   WrappedComponent.displayName || WrappedComponent.name || 'Component';
@@ -69,14 +69,12 @@ const dataContainerWrapper = (action: any => Promise<any>) => (
     render() {
       const { data, isLoading, error } = this.state;
       return (
-        data && (
-          <ComposedComponent
-            data={data}
-            isLoading={isLoading}
-            error={error}
-            {...this.props}
-          />
-        )
+        <ComposedComponent
+          data={data}
+          isLoading={isLoading}
+          error={error}
+          {...this.props}
+        />
       );
     }
   }
