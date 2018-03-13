@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import * as ReactDOM from 'react-dom';
+import 'typeface-roboto';
 import Root from './Root';
 import routes from './routes';
 

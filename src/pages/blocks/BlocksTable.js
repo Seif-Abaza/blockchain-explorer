@@ -16,6 +16,7 @@ const styles = theme => ({
     overflowX: 'auto',
   },
   table: {
+    width: '100%',
     minWidth: 700,
   },
 });
@@ -30,19 +31,19 @@ const BlocksTable = ({ classes, data }: Props) => (
     <Table className={classes.table}>
       <TableHead>
         <TableRow>
-          <TableCell>Block #</TableCell>
-          <TableCell numeric>Number of Transactions</TableCell>
-          <TableCell numeric>Size</TableCell>
-          <TableCell numeric>TimeStamp</TableCell>
+          <TableCell>Block</TableCell>
+          <TableCell>Transactions</TableCell>
+          <TableCell>Size</TableCell>
+          <TableCell>TimeStamp</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
         {data.map(n => (
           <TableRow key={n.hash}>
             <TableCell>{n.number}</TableCell>
-            <TableCell numeric>{n.transactions.length}</TableCell>
-            <TableCell numeric>{n.size}</TableCell>
-            <TableCell numeric>{n.timestamp}</TableCell>
+            <TableCell>{n.transactions.length}</TableCell>
+            <TableCell>{n.size}</TableCell>
+            <TableCell>{n.timestamp}</TableCell>
           </TableRow>
         ))}
       </TableBody>
