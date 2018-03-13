@@ -1,8 +1,9 @@
+// @flow
 import React from 'react';
 import { mount } from 'enzyme';
 import dataContainer from './dataContainer';
 
-describe('dataContainer tests', async () => {
+describe('dataContainer tests', () => {
   test('happy path', async () => {
     const mockData = [{ test: '1' }];
     const promise = Promise.resolve(mockData);
