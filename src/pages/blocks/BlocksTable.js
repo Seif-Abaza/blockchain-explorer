@@ -1,5 +1,6 @@
 // @flow
-import React from 'react';
+import React, { type Element } from 'react';
+import { compose } from 'ramda';
 import { withStyles } from 'material-ui/styles';
 import Table, {
   TableBody,
@@ -8,10 +9,12 @@ import Table, {
   TableRow,
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
+import DataContainer from '../../hocs/dataContainer';
+import { getLatestBlocks } from '../../services/web3.service';
 
 const styles = theme => ({
   root: {
-    width: '100%',
+    width: '90%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },
@@ -21,10 +24,33 @@ const styles = theme => ({
   },
 });
 
+type Block = {
+  hash: string,
+  number: number,
+  transactions: string[],
+  size: number,
+  timestamp: number,
+};
+
 type Props = {
   classes: any,
-  data: any[],
+  data: Block[],
 };
+
+const renderBlockRow = ({
+  hash,
+  number,
+  transactions,
+  size,
+  timestamp,
+}: Block): Element<any> => (
+  <TableRow key={hash}>
+    <TableCell>{number}</TableCell>
+    <TableCell>{transactions.length}</TableCell>
+    <TableCell>{size}</TableCell>
+    <TableCell>{timestamp}</TableCell>
+  </TableRow>
+);
 
 const BlocksTable = ({ classes, data }: Props) => (
   <Paper className={classes.root}>
@@ -37,18 +63,14 @@ const BlocksTable = ({ classes, data }: Props) => (
           <TableCell>TimeStamp</TableCell>
         </TableRow>
       </TableHead>
-      <TableBody>
-        {data.map(n => (
-          <TableRow key={n.hash}>
-            <TableCell>{n.number}</TableCell>
-            <TableCell>{n.transactions.length}</TableCell>
-            <TableCell>{n.size}</TableCell>
-            <TableCell>{n.timestamp}</TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
+      <TableBody>{data.map(renderBlockRow)}</TableBody>
     </Table>
   </Paper>
 );
 
-export default withStyles(styles)(BlocksTable);
+const enhancer = compose(
+  DataContainer(() => getLatestBlocks(20)),
+  withStyles(styles)
+);
+
+export default enhancer(BlocksTable);
