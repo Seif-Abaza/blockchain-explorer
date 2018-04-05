@@ -14,7 +14,7 @@ import { getLatestBlocks } from '../../services/web3.service';
 
 const styles = theme => ({
   root: {
-    width: '90%',
+    width: '100%',
     marginTop: theme.spacing.unit * 3,
     overflowX: 'auto',
   },

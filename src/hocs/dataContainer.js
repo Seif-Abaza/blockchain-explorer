@@ -13,14 +13,21 @@ export type DataContainerProps = {
 export const getDisplayName = (WrappedComponent: ComponentType<any>): string =>
   WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
+type Action<Props> = Props => Promise<any>;
+
+type ComposedComponentType<Props> = ComponentType<{
+  ...Props,
+  ...DataContainerProps,
+}>;
+
+type WrapperFunction<Props> = (
+  ComposedComponentType<Props>
+) => ComponentType<Props>;
+
 function dataContainerWrapper<Props: {}>(
-  action: Props => Promise<any>
-): (
-  ComponentType<{ ...Props, ...DataContainerProps }>
-) => ComponentType<Props> {
-  return (
-    ComposedComponent: ComponentType<{ ...Props, ...DataContainerProps }>
-  ) => {
+  action: Action<Props>
+): WrapperFunction<Props> {
+  return (ComposedComponent: ComposedComponentType<Props>) => {
     class DataContainer extends Component<Props, DataContainerProps> {
       state = {
         data: null,

@@ -7,7 +7,7 @@ import CssBaseline from 'material-ui/CssBaseline';
 
 import type { Routes } from './routes';
 
-const theme = createMuiTheme({});
+const theme: {} = createMuiTheme({});
 
 type Props = {
   routes: Routes,
