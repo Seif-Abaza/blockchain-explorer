@@ -33,7 +33,10 @@ type Block = {
 };
 
 type Props = {
-  classes: any,
+  classes: {
+    root: string,
+    table: string,
+  },
   data: Block[],
 };
 

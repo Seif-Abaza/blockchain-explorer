@@ -24,4 +24,26 @@ describe('dataContainer tests', () => {
       isLoading: false,
     });
   });
+
+  test('promise rejected', () => {
+    const mockError = 'error';
+    const promise = Promise.reject(mockError);
+    const mockAction = () => promise;
+    const TestComponent = () => <div />;
+    const DataContainerComponent = dataContainer(mockAction)(TestComponent);
+    const wrapper = mount(<DataContainerComponent />);
+    expect(wrapper.find(TestComponent).props()).toEqual({
+      data: null,
+      isLoading: true,
+      error: null,
+    });
+    promise.catch(() => {
+      wrapper.update();
+      expect(wrapper.find(TestComponent).props()).toEqual({
+        data: null,
+        error: mockError,
+        isLoading: false,
+      });
+    });
+  });
 });

@@ -2,12 +2,12 @@
 import React, { Component, type ComponentType } from 'react';
 
 type Data = {} | [];
-type Error = string | {};
+type FetchError = string | {};
 
 export type DataContainerProps = {
   data: ?Data,
   isLoading: boolean,
-  error: ?Error,
+  error: ?FetchError,
 };
 
 export const getDisplayName = (WrappedComponent: ComponentType<any>): string =>
@@ -41,14 +41,14 @@ function dataContainerWrapper<Props: {}>(
       async fetchData(props: Props): Promise<void> {
         try {
           this.startLoading();
-          const data = await action(props);
+          const data: Data = await action(props);
           this.updateData(data);
         } catch (error) {
           this.updateError(error);
         }
       }
 
-      updateData = (data: any): void => {
+      updateData = (data: Data): void => {
         this.setState({
           isLoading: false,
           data,
