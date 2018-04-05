@@ -1,4 +1,8 @@
-// @flow
+/**
+ * @jest-environment node
+ *
+ * @flow
+ */
 import React from 'react';
 import BlocksTable from './BlocksTable';
 

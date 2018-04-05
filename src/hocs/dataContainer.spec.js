@@ -7,7 +7,7 @@ describe('dataContainer tests', () => {
   test('happy path', async () => {
     const mockData = [{ test: '1' }];
     const promise = Promise.resolve(mockData);
-    const mockAction = jest.fn().mockReturnValue(promise);
+    const mockAction = () => promise;
     const TestComponent = () => <div />;
     const DataContainerComponent = dataContainer(mockAction)(TestComponent);
     const wrapper = mount(<DataContainerComponent />);
