@@ -18,8 +18,8 @@ export type Block = {
 };
 
 // probably better would be to create a flowtyped lib
-// eslint-disable-next-line prefer-destructuring
-export const getBlock: number => Promise<any> = web3.eth.getBlock;
+export const getBlock = (index: number): Promise<any> =>
+  web3.eth.getBlock(index);
 
 export const getLatestBlocks = async (amount: number): Promise<any[]> => {
   try {
