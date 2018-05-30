@@ -17,19 +17,18 @@ export type Block = {
   extraData: string,
 };
 
-export const getBlock = (index: number): Promise<any> =>
-  new Promise((resolve, reject) => {
-    web3.eth.getBlock(index, (error: Error, result: Block | null) => {
-      if (error) return reject(error);
-      return resolve(result);
-    });
-  });
+// probably better would be to create a flowtyped lib
+// eslint-disable-next-line prefer-destructuring
+export const getBlock: number => Promise<any> = web3.eth.getBlock;
 
-export const getLatestBlocks = (amount: number): Promise<any[]> => {
-  const latestBlock: ?number = web3.eth.blockNumber;
-  if (!latestBlock) return Promise.reject(new Error('latest block not found'));
-  const latestBlockNumbers = Array.from(Array(amount).keys()).map(
-    x => latestBlock - x
-  );
-  return Promise.all(latestBlockNumbers.map(getBlock));
+export const getLatestBlocks = async (amount: number): Promise<any[]> => {
+  try {
+    const latestBlock: number = await web3.eth.getBlockNumber();
+    const latestBlockNumbers = Array.from(Array(amount).keys()).map(
+      x => latestBlock - x
+    );
+    return Promise.all(latestBlockNumbers.map(getBlock));
+  } catch (error) {
+    return error;
+  }
 };
