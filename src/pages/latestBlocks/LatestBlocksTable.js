@@ -1,6 +1,7 @@
 // @flow
 import React, { type Element } from 'react';
 import { compose } from 'ramda';
+import { withRouter, type RouterHistory } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
 import Table, {
   TableBody,
@@ -11,6 +12,7 @@ import Table, {
 import Paper from 'material-ui/Paper';
 import DataContainer from '../../hocs/dataContainer';
 import { getLatestBlocks } from '../../services/web3.service';
+import { type Block } from '../block/BlockPage';
 
 const styles = theme => ({
   root: {
@@ -24,30 +26,23 @@ const styles = theme => ({
   },
 });
 
-type Block = {
-  hash: string,
-  number: number,
-  transactions: string[],
-  size: number,
-  timestamp: number,
-};
-
 type Props = {
   classes: {
     root: string,
     table: string,
   },
   data: Block[],
+  history: RouterHistory,
 };
 
-const renderBlockRow = ({
+const renderBlockRow = ({ onClick }) => ({
   hash,
   number,
   transactions,
   size,
   timestamp,
 }: Block): Element<any> => (
-  <TableRow key={hash}>
+  <TableRow key={hash} onClick={() => onClick(`/block/${number}`)}>
     <TableCell>{number}</TableCell>
     <TableCell>{transactions.length}</TableCell>
     <TableCell>{size}</TableCell>
@@ -55,7 +50,7 @@ const renderBlockRow = ({
   </TableRow>
 );
 
-const BlocksTable = ({ classes, data }: Props) =>
+const LatestBlockTable = ({ classes, data, history }: Props) =>
   data && (
     <Paper className={classes.root}>
       <Table className={classes.table}>
@@ -67,18 +62,21 @@ const BlocksTable = ({ classes, data }: Props) =>
             <TableCell>TimeStamp</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>{data.map(renderBlockRow)}</TableBody>
+        <TableBody>
+          {data.map(renderBlockRow({ onClick: history.push }))}
+        </TableBody>
       </Table>
     </Paper>
   );
 
-BlocksTable.defaultProps = {
+LatestBlockTable.defaultProps = {
   data: [],
 };
 
 const enhancer = compose(
+  withRouter,
   DataContainer(() => getLatestBlocks(20)),
   withStyles(styles)
 );
 
-export default enhancer(BlocksTable);
+export default enhancer(LatestBlockTable);

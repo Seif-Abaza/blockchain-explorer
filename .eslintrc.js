@@ -18,9 +18,11 @@ module.exports = {
       "no-underscore-dangle": 0,
       "no-nested-ternary": 0,
       "strict": 0,
+      "prefer-promise-reject-errors": 0,
       "no-confusing-arrow": 0,
       "react/forbid-prop-types": 0,
       "import/prefer-default-export": 0,
+      "react/sort-comp": 0,
       "max-len": ["error", { "code": 80 }],
       "prettier/prettier": [
         "error",

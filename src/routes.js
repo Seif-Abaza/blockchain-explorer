@@ -1,7 +1,8 @@
 // @flow
 import type { ComponentType } from 'react';
 
-import BlocksPage from './pages/blocks/BlocksPage';
+import LatestBlocksPage from './pages/latestBlocks/LatestBlocksPage';
+import BlockPage from './pages/block/BlockPage';
 
 export type RouteConfig = {
   component: ComponentType<any>,
@@ -12,8 +13,14 @@ export type Routes = Array<RouteConfig>;
 
 const routes: Routes = [
   {
-    component: BlocksPage,
+    component: BlockPage,
+    path: '/block/:id',
+    exact: true,
+  },
+  {
+    component: LatestBlocksPage,
     path: '/',
+    exact: true,
   },
 ];
 
