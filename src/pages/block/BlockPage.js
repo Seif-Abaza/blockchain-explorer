@@ -6,23 +6,7 @@ import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import DataContainer from '../../hocs/dataContainer';
-import { getBlock } from '../../services/web3.service';
-
-type BigNubmer = {};
-
-export type Block = {
-  hash: string,
-  number: number,
-  transactions: string[],
-  size: number,
-  timestamp: number,
-  difficulty: BigNubmer,
-  nonce: string,
-  miner: string,
-  gasLimit: number,
-  gasUsed: number,
-  extraData: string,
-};
+import { getBlock, type Block } from '../../services/web3.service';
 
 type Props = {
   data: Block,

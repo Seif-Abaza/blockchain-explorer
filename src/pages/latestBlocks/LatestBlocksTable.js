@@ -11,8 +11,7 @@ import Table, {
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
 import DataContainer from '../../hocs/dataContainer';
-import { getLatestBlocks } from '../../services/web3.service';
-import { type Block } from '../block/BlockPage';
+import { getLatestBlocks, type Block } from '../../services/web3.service';
 
 const styles = theme => ({
   root: {
@@ -31,24 +30,22 @@ type Props = {
     root: string,
     table: string,
   },
-  data: Block[],
+  data: (?Block)[],
   history: RouterHistory,
 };
 
-const renderBlockRow = ({ onClick }) => ({
-  hash,
-  number,
-  transactions,
-  size,
-  timestamp,
-}: Block): Element<any> => (
-  <TableRow key={hash} onClick={() => onClick(`/block/${number}`)}>
-    <TableCell>{number}</TableCell>
-    <TableCell>{transactions.length}</TableCell>
-    <TableCell>{size}</TableCell>
-    <TableCell>{timestamp}</TableCell>
-  </TableRow>
-);
+const renderBlockRow = ({ onClick }) => (block: ?Block): ?Element<any> => {
+  if (!block) return undefined;
+  const { hash, number, transactions, size, timestamp } = block;
+  return (
+    <TableRow key={hash} onClick={() => onClick(`/block/${number}`)}>
+      <TableCell>{number}</TableCell>
+      <TableCell>{transactions.length}</TableCell>
+      <TableCell>{size}</TableCell>
+      <TableCell>{timestamp}</TableCell>
+    </TableRow>
+  );
+};
 
 const LatestBlockTable = ({ classes, data, history }: Props) =>
   data && (

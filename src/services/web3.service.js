@@ -1,9 +1,25 @@
 // @flow
 import web3 from '../web3';
 
+type BigNubmer = {};
+
+export type Block = {
+  hash: string,
+  number: number,
+  transactions: string[],
+  size: number,
+  timestamp: number,
+  difficulty: BigNubmer,
+  nonce: string,
+  miner: string,
+  gasLimit: number,
+  gasUsed: number,
+  extraData: string,
+};
+
 export const getBlock = (index: number): Promise<any> =>
   new Promise((resolve, reject) => {
-    web3.eth.getBlock(index, (error, result) => {
+    web3.eth.getBlock(index, (error: Error, result: Block | null) => {
       if (error) return reject(error);
       return resolve(result);
     });
