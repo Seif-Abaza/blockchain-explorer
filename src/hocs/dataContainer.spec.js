@@ -3,6 +3,15 @@ import React from 'react';
 import { mount } from 'enzyme';
 import dataContainer from './dataContainer';
 
+/* I don't really like mocking this way
+maybe consider changing implementation for dataContainer
+*/
+jest.mock('../utils/promiseUtils', () => ({
+  makeCancelable: jest.fn(id => ({
+    promise: id,
+  })),
+}));
+
 describe('dataContainer tests', () => {
   test('happy path', async () => {
     const mockData = [{ test: '1' }];
