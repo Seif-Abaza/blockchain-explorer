@@ -1,7 +1,7 @@
-import web3 from '../web3';
-import * as web3Service from './web3.service';
+import web3 from '../../web3';
+import * as latestBlocksService from './latestBlocks.service';
 
-jest.mock('../web3');
+jest.mock('../../web3');
 
 describe('test', () => {
   beforeAll(() => {
@@ -11,13 +11,8 @@ describe('test', () => {
     web3.eth.getBlockNumber = jest.fn(() => Promise.resolve(5));
   });
 
-  test('promisifies get block', async () => {
-    const block = await web3Service.getBlock(1);
-    expect(block).toEqual({ blockNumber: 1 });
-  });
-
   test('returns latest n blocks', async () => {
-    const block = await web3Service.getLatestBlocks(2);
+    const block = await latestBlocksService.getLatestBlocks(2);
     expect(block).toEqual([
       {
         blockNumber: 5,

@@ -5,8 +5,8 @@ import Card, { CardContent, CardHeader } from 'material-ui/Card';
 import Grid from 'material-ui/Grid';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
-import DataContainer from '../../hocs/dataContainer';
-import { getBlock, type Block } from '../../services/web3.service';
+import dataFetcher from '../../hocs/dataFetcher';
+import { getBlock, type Block } from './block.service';
 
 type Props = {
   data: Block,
@@ -86,7 +86,7 @@ function BlockPage({ data, classes }: Props) {
 }
 
 const enhancer = compose(
-  DataContainer(({ match }) => getBlock(match.params.id)),
+  dataFetcher(({ match }) => getBlock(match.params.id)),
   withStyles(styles)
 );
 

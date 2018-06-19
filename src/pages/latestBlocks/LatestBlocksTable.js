@@ -10,8 +10,9 @@ import Table, {
   TableRow,
 } from 'material-ui/Table';
 import Paper from 'material-ui/Paper';
-import DataContainer from '../../hocs/dataContainer';
-import { getLatestBlocks, type Block } from '../../services/web3.service';
+import dataFetcher from '../../hocs/dataFetcher';
+import { getLatestBlocks } from './latestBlocks.service';
+import { type Block } from '../block/block.service';
 
 const styles = theme => ({
   root: {
@@ -72,7 +73,7 @@ LatestBlockTable.defaultProps = {
 
 const enhancer = compose(
   withRouter,
-  DataContainer(() => getLatestBlocks(20)),
+  dataFetcher(() => getLatestBlocks(20)),
   withStyles(styles)
 );
 

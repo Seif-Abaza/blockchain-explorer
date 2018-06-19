@@ -1,9 +1,11 @@
 // @flow
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { renderRoutes } from 'react-router-config';
+import { Provider } from 'react-redux';
 import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
 import CssBaseline from 'material-ui/CssBaseline';
+import { ConnectedRouter } from 'connected-react-router';
+import { renderRoutes } from 'react-router-config';
+import store, { history } from './stores/store';
 
 import type { Routes } from './routes';
 
@@ -14,10 +16,14 @@ type Props = {
 };
 
 const Root = ({ routes }: Props) => (
-  <MuiThemeProvider theme={theme}>
-    <CssBaseline />
-    <Router>{renderRoutes(routes)}</Router>
-  </MuiThemeProvider>
+  <Provider store={store}>
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <ConnectedRouter history={history}>
+        {renderRoutes(routes)}
+      </ConnectedRouter>
+    </MuiThemeProvider>
+  </Provider>
 );
 
 export default Root;
