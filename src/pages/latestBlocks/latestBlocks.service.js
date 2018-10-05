@@ -2,9 +2,12 @@
 import web3 from '../../web3';
 import { getBlock } from '../block/block.service';
 
-export const getLatestBlocks = async (amount: number): Promise<any[]> => {
+export const getLatestBlocks = async (
+  amount: number,
+  offset?: number
+): Promise<any[]> => {
   try {
-    const latestBlock: number = await web3.eth.getBlockNumber();
+    const latestBlock: number = offset || (await web3.eth.getBlockNumber());
     const latestBlockNumbers = Array.from(Array(amount).keys()).map(
       x => latestBlock - x
     );

@@ -3,6 +3,7 @@ import React, { type Element } from 'react';
 import { compose } from 'ramda';
 import { withRouter, type RouterHistory } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
+import moment from 'moment';
 import Table, {
   TableBody,
   TableCell,
@@ -13,6 +14,9 @@ import Paper from 'material-ui/Paper';
 import dataFetcher from '../../hocs/dataFetcher';
 import { getLatestBlocks } from './latestBlocks.service';
 import { type Block } from '../block/block.service';
+
+const formatTimestamp = timestamp =>
+  moment.unix(timestamp).format('DD-MM-YYYY H:ss');
 
 const styles = theme => ({
   root: {
@@ -37,13 +41,12 @@ type Props = {
 
 const renderBlockRow = ({ onClick }) => (block: ?Block): ?Element<any> => {
   if (!block) return undefined;
-  const { hash, number, transactions, size, timestamp } = block;
+  const { hash, number, transactions, timestamp } = block;
   return (
     <TableRow key={hash} onClick={() => onClick(`/block/${number}`)}>
       <TableCell>{number}</TableCell>
       <TableCell>{transactions.length}</TableCell>
-      <TableCell>{size}</TableCell>
-      <TableCell>{timestamp}</TableCell>
+      <TableCell>{formatTimestamp(timestamp)}</TableCell>
     </TableRow>
   );
 };
@@ -56,7 +59,6 @@ const LatestBlockTable = ({ classes, data, history }: Props) =>
           <TableRow>
             <TableCell>Block</TableCell>
             <TableCell>Transactions</TableCell>
-            <TableCell>Size</TableCell>
             <TableCell>TimeStamp</TableCell>
           </TableRow>
         </TableHead>
