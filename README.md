@@ -2,7 +2,7 @@
 
 ## Motivation
 
-Mostly messing around with flow, TDD, functional programming and react architecture design. 
+Mostly messing around with flow, TDD, and functional programming concepts. 
 
 
 ## Scripts
